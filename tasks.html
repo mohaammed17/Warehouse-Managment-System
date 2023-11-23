@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Homework 1: Tasks for srs37</title>
+</head>
+
+<body>
+<h1>Homework 1: Tasks for srs37</h1>
+
+<p>Your personal task is to develop a system for warehouses and their products.</p>
+
+<h2>Task 1: Configuration [4 marks]</h2>
+<p>Configure the project to support the use of JSPs as view technology. JSPs must be configured to be placed inside folder <code>src/main/webapp/WEB-INF/views/</code>.</p>
+
+<h2>Task 2: Domain Classes [13 marks]</h2>
+
+<p>Create class <code>co2103.hw1.domain.Product</code>. With the following private fields:
+<ol>
+  <li><code>String name</code></li>
+  <li><code>String slogan</code></li>
+  <li><code>String flavour</code></li>
+  <li><code>int price</code></li>
+</ol>
+Generate necessary getters and setters. [7 marks]
+</p>
+
+<p>Create class <code>co2103.hw1.domain.Warehouse</code>. With the following private fields:
+<ol>
+  <li><code>int id</code></li>
+  <li><code>String founder</code></li>
+  <li><code>String industry</code></li>
+  <li><code>List&lt;Product&gt; products</code></li>
+</ol>
+Generate necessary getters and setters. [6 marks]
+</p>
+
+
+<h2>Task 3: Controller (simple) [5 marks]</h2>
+<p>Create controller <code>co2103.hw1.controller.MainController</code> [2 marks].
+<ol>
+  <li>Requests for URL <code>"/"</code> (POST and GET) should show the view <code>start</code> (the corresponding JSP already exists). [3 marks]</li>
+</ol>
+</p>
+
+<h2>Task 4: Controller, View, and Form [20 marks]</h2>
+
+<p>Create field <code>public static List&lt;Warehouse&gt; warehouses</code> in class <code>co2103.hw1.Hw1Application</code>. Initialize the list inside class <code>co2103.hw1.Hw1Application</code> to contain one warehouse with two products. [4 marks]</p>
+
+<p>Create controller <code>co2103.hw1.controller.WarehouseController</code> and add methods with request mappings for the following behavior:
+<ol>
+  <li>GET requests for URL <code>"/warehouses"</code> should show view <code>warehouses/list</code>. [2 marks]
+    <ul>
+      <li>Add the list of all warehouses from <code>co2103.hw1.Hw1Application</code> to the model as attribute <code>warehouses</code>. [2 marks]</li>
+      <li>Create the corresponding JSP to list the founder and industry of each warehouse followed by a link to URL <code>"/products?warehouse={id of warehouse}"</code>, e.g., <code>"/products?warehouse=3"</code>. [4 marks]</li>
+    </ul>
+  </li>
+  <li>Requests for URL <code>"/newWarehouse"</code> should show view <code>warehouses/form</code>. [3 marks] Create the corresponding JSP with a form with <code>modelAttribute="warehouse"</code> and <code>action="/addWarehouse"</code> and inputs for all fields of class <code>Warehouse</code> except for <code>products</code>. [5 marks]</li>
+  <li>POST requests for URL <code>"/addWarehouse"</code> should add a new warehouse to the list of all warehouses in <code>co2103.hw1.Hw1Application</code> and redirect to <code>/warehouses</code>. [3 marks]</li>
+</ol>
+</p>
+
+<h2>Task 5: Controller, View, and Form with additional Parameter [33 marks]</h2>
+
+<p>Create controller <code>co2103.hw1.controller.ProductController</code> and add methods with request mappings for the following behavior:
+<ol>
+  <li>GET requests for URL <code>"/products"</code> should show view <code>products/list</code>. [2 marks]
+    <ul>
+      <li>Based on request parameter <code>warehouse</code> determine the corresponding warehouse from <code>co2103.hw1.Hw1Application</code>. [2 marks]</li>
+      <li>Add the list of all products of that warehouse to the model as attribute <code>products</code>. [2 marks]</li>
+      <li>Create the corresponding JSP for the view to list the name, slogan, flavour, and price of each product. [4 marks]</li>
+      <li>At the end of the list in the JSP add a link to URL <code>"/newProduct?warehouse={id of warehouse whose products are listed}"</code>, e.g., <code>"/newProduct?warehouse=3"</code>. [4 marks]</li>
+    </ul>
+  </li>
+  <li>Requests for URL <code>"/newProduct"</code> should show view <code>products/form</code>. [3 marks]
+    <ul>
+      <li>Create the corresponding JSP with a form with <code>modelAttribute="product"</code> and <code>action="/addProduct"</code> and inputs for all fields of class <code>Product</code>. [6 marks]</li>
+      <li>Also add the request parameter <code>warehouse</code> with the ID of the current warehouse. [4 marks]</li>
+    </ul>
+  </li>
+  <li>POST requests for URL <code>"/addProduct"</code> should add a new product to the list of products of the warehouse identified by request parameter <code>warehouse</code> and then redirect to <code>/warehouses</code>. [6 marks]</li>
+</ol>
+</p>
+
+<h2>Task 6: Validation [25 marks]</h2>
+
+<p>Set up a validator for class <code>Warehouse</code> and make it available in controller <code>WarehouseController</code>. [4 marks]</p>
+<p>When adding a new warehouse validate that
+  <ol>
+    <li>The value of field <code>id</code> is unique within the list <code>Hw1Application.warehouses</code>. [3 marks]</li>
+    <li>The value of field <code>founder</code> is not empty. [2 marks]</li>
+    <li>The value of field <code>industry</code> is not empty. [2 marks]</li>
+  </ol>
+  In case of validation errors go back to the form and show error messages for each field in the form.
+</p>
+
+
+<p>Set up a validator for class <code>Product</code> and make it available in controller <code>ProductController</code>. [4 marks]</p>
+<p>When adding a new product validate that
+  <ol>
+    <li>The value of field <code>name</code> is not empty. [2 marks]</li>
+    <li>The value of field <code>slogan</code> is not empty. [2 marks]</li>
+    <li>The value of field <code>flavour</code> is either <code>"Orange"</code>, <code>"Banana"</code>, or <code>"Apple"</code>. [3 marks]</li>
+    <li>The value of field <code>price</code> is between (including) 1 and 3. [3 marks]</li>
+  </ol>
+  In case of validation errors go back to the form and show error messages for each field in the form.
+</p>
+
+</body>
+
+</html>
