@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Homework 1: Tasks for $username</title>
+</head>
+
+<body>
+<h1>Homework 1: Tasks for $username</h1>
+
+<p>$intro</p>
+
+<h2>Task 1: Configuration [4 marks]</h2>
+<p>Configure the project to support the use of JSPs as view technology. JSPs must be configured to be placed inside folder <code>src/main/webapp/WEB-INF/views/</code>.</p>
+
+<h2>Task 2: Domain Classes [13 marks]</h2>
+
+<p>Create class <code>co2103.hw1.domain.$Child</code>. With the following private fields:
+<ol>
+  <li><code>String $cf1</code></li>
+  <li><code>String $cf2</code></li>
+  <li><code>String $cf3</code></li>
+  <li><code>int $cf4</code></li>
+</ol>
+Generate necessary getters and setters. [7 marks]
+</p>
+
+<p>Create class <code>co2103.hw1.domain.$Parent</code>. With the following private fields:
+<ol>
+  <li><code>int $pf1</code></li>
+  <li><code>String $pf2</code></li>
+  <li><code>String $pf3</code></li>
+  <li><code>List&lt;$Child&gt; $children</code></li>
+</ol>
+Generate necessary getters and setters. [6 marks]
+</p>
+
+
+<h2>Task 3: Controller (simple) [5 marks]</h2>
+<p>Create controller <code>co2103.hw1.controller.MainController</code> [2 marks].
+<ol>
+  <li>Requests for URL <code>"/"</code> (POST and GET) should show the view <code>start</code> (the corresponding JSP already exists). [3 marks]</li>
+</ol>
+</p>
+
+<h2>Task 4: Controller, View, and Form [20 marks]</h2>
+
+<p>Create field <code>public static List&lt;$Parent&gt; $parents</code> in class <code>co2103.hw1.Hw1Application</code>. Initialize the list inside class <code>co2103.hw1.Hw1Application</code> to contain one $parent with two $children. [4 marks]</p>
+
+<p>Create controller <code>co2103.hw1.controller.$ParentController</code> and add methods with request mappings for the following behavior:
+<ol>
+  <li>GET requests for URL <code>"/$parents"</code> should show view <code>$parents/list</code>. [2 marks]
+    <ul>
+      <li>Add the list of all $parents from <code>co2103.hw1.Hw1Application</code> to the model as attribute <code>$parents</code>. [2 marks]</li>
+      <li>Create the corresponding JSP to list the $pf2 and $pf3 of each $parent followed by a link to URL <code>"/$children?$parent={id of $parent}"</code>, e.g., <code>"/$children?$parent=3"</code>. [4 marks]</li>
+    </ul>
+  </li>
+  <li>Requests for URL <code>"/new$Parent"</code> should show view <code>$parents/form</code>. [3 marks] Create the corresponding JSP with a form with <code>modelAttribute="$parent"</code> and <code>action="/add$Parent"</code> and inputs for all fields of class <code>$Parent</code> except for <code>$children</code>. [5 marks]</li>
+  <li>POST requests for URL <code>"/add$Parent"</code> should add a new $parent to the list of all $parents in <code>co2103.hw1.Hw1Application</code> and redirect to <code>/$parents</code>. [3 marks]</li>
+</ol>
+</p>
+
+<h2>Task 5: Controller, View, and Form with additional Parameter [33 marks]</h2>
+
+<p>Create controller <code>co2103.hw1.controller.$ChildController</code> and add methods with request mappings for the following behavior:
+<ol>
+  <li>GET requests for URL <code>"/$children"</code> should show view <code>$children/list</code>. [2 marks]
+    <ul>
+      <li>Based on request parameter <code>$parent</code> determine the corresponding $parent from <code>co2103.hw1.Hw1Application</code>. [2 marks]</li>
+      <li>Add the list of all $children of that $parent to the model as attribute <code>$children</code>. [2 marks]</li>
+      <li>Create the corresponding JSP for the view to list the $cf1, $cf2, $cf3, and $cf4 of each $child. [4 marks]</li>
+      <li>At the end of the list in the JSP add a link to URL <code>"/new$Child?$parent={id of $parent whose $children are listed}"</code>, e.g., <code>"/new$Child?$parent=3"</code>. [4 marks]</li>
+    </ul>
+  </li>
+  <li>Requests for URL <code>"/new$Child"</code> should show view <code>$children/form</code>. [3 marks]
+    <ul>
+      <li>Create the corresponding JSP with a form with <code>modelAttribute="$child"</code> and <code>action="/add$Child"</code> and inputs for all fields of class <code>$Child</code>. [6 marks]</li>
+      <li>Also add the request parameter <code>$parent</code> with the ID of the current $parent. [4 marks]</li>
+    </ul>
+  </li>
+  <li>POST requests for URL <code>"/add$Child"</code> should add a new $child to the list of $children of the $parent identified by request parameter <code>$parent</code> and then redirect to <code>/$parents</code>. [6 marks]</li>
+</ol>
+</p>
+
+<h2>Task 6: Validation [25 marks]</h2>
+
+<p>Set up a validator for class <code>$Parent</code> and make it available in controller <code>$ParentController</code>. [4 marks]</p>
+<p>When adding a new $parent validate that
+  <ol>
+    <li>The value of field <code>id</code> is unique within the list <code>Hw1Application.$parents</code>. [3 marks]</li>
+    <li>The value of field <code>$pf2</code> is not empty. [2 marks]</li>
+    <li>The value of field <code>$pf3</code> is not empty. [2 marks]</li>
+  </ol>
+  In case of validation errors go back to the form and show error messages for each field in the form.
+</p>
+
+
+<p>Set up a validator for class <code>$Child</code> and make it available in controller <code>$ChildController</code>. [4 marks]</p>
+<p>When adding a new $child validate that
+  <ol>
+    <li>The value of field <code>$cf1</code> is not empty. [2 marks]</li>
+    <li>The value of field <code>$cf2</code> is not empty. [2 marks]</li>
+    <li>The value of field <code>$cf3</code> is either <code>"$v1"</code>, <code>"$v2"</code>, or <code>"$v3"</code>. [3 marks]</li>
+    <li>The value of field <code>$cf4</code> is between (including) $low and $high. [3 marks]</li>
+  </ol>
+  In case of validation errors go back to the form and show error messages for each field in the form.
+</p>
+
+</body>
+
+</html>
